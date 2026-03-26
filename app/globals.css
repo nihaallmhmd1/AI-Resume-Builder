@@ -1,0 +1,177 @@
+@import "tailwindcss";
+
+@layer components {
+  .sidebar-item {
+    @apply flex items-center gap-3 px-4 py-3 rounded-r-full text-sm font-medium transition-colors cursor-pointer;
+  }
+  
+  .sidebar-item-active {
+    @apply bg-blue-50 text-blue-600 font-bold;
+  }
+
+  .sidebar-item-inactive {
+    @apply text-gray-600 hover:bg-gray-100;
+  }
+}
+
+:root {
+  --background: #f8f9fa;
+  --foreground: #202124;
+  --card-bg: #ffffff;
+  --accent: #3b82f6;
+  --border: #e0e0e0;
+}
+
+@theme {
+  --font-sans: var(--font-poppins);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card-bg);
+  --color-accent: var(--accent);
+  --color-border-custom: var(--border);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer utilities {
+
+  /* Glass cards */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+  }
+
+  .glass-panel {
+    background: rgba(255, 255, 255, 0.10);
+    backdrop-filter: blur(30px);
+    border: 1px solid rgba(255, 255, 255, 0.20);
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+  }
+
+  /* Safe gradients */
+  .text-gradient {
+    background: linear-gradient(90deg, #a855f7, #ec4899, #22d3ee);
+    background-clip: text;
+  -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .text-gradient-blue {
+    background: linear-gradient(90deg, #22d3ee, #3b82f6, #a855f7);
+    background-clip: text;
+  -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Animations */
+  .animate-blob {
+    animation: blob 10s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .animation-delay-2000 {
+    animation-delay: 2s;
+  }
+
+  .animation-delay-4000 {
+    animation-delay: 4s;
+  }
+
+}
+
+/* Blob animation */
+@keyframes blob {
+  0% {
+    transform: translate(0px, 0px) scale(1) rotate(0deg);
+  }
+
+  33% {
+    transform: translate(40px, -60px) scale(1.2) rotate(45deg);
+  }
+
+  66% {
+    transform: translate(-30px, 40px) scale(0.8) rotate(90deg);
+  }
+
+  100% {
+    transform: translate(0px, 0px) scale(1) rotate(180deg);
+  }
+}
+
+/* PDF Export Fix (Important for html2canvas) */
+.pdf-export-container {
+  background: #ffffff;
+  color: #0f172a;
+  border: 1px solid #e2e8f0;
+}
+
+/* ULTIMATE PRINT ISOLATION SYSTEM */
+@media print {
+  @page {
+    margin: 0;
+    size: auto;
+  }
+
+  body, html {
+    background: white !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  /* Hide everything */
+  body > *:not(main),
+  main, .container, .grid, .xl\:col-span-8, .xl\:col-span-12, .resume-preview-container,
+  .p-4, .p-6, .p-8, .p-10, .p-12, .lg\:p-10, .lg\:p-12, .pt-24, .xl\:pl-64 {
+    display: block !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    position: static !important;
+  }
+
+  .no-print, .print-hidden, nav, aside, button, .sidebar, .xl\:col-span-4, .action-header, .ats-score-panel, .suggest-panel, .top-edit-banner, #builder-section {
+    display: none !important;
+  }
+
+  /* Reveal only the resume container */
+  #resume-pdf-container {
+    display: block !important;
+    visibility: visible !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    padding: 15mm !important;
+    z-index: 99999 !important;
+    background: white !important;
+    color: #202124 !important;
+  }
+
+  #resume-pdf-container * {
+    visibility: visible !important;
+    box-sizing: border-box !important;
+    --tw-ring-color: #3b82f6 !important;
+    --tw-shadow: 0 0 #0000 !important;
+    --tw-ring-offset-shadow: 0 0 #0000 !important;
+    --tw-ring-shadow: 0 0 #0000 !important;
+  }
+
+  /* Color Fixes for Print */
+  #resume-pdf-container [style*="color: #06b6d4"] { color: #3b82f6 !important; }
+  #resume-pdf-container [style*="color: #8b5cf6"] { color: #6366f1 !important; }
+
+  /* Ensure style tags remain hidden even if children are visible */
+  style, script {
+    display: none !important;
+    visibility: hidden !important;
+  }
+}
